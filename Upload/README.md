@@ -25,6 +25,8 @@
 | divine            | "божий", "свет"        |
 | blink             | "прыжок"               |
 | thunderbolt       | "гром"                 |
+| bubble            | "пузырь"               |
+| doom              | "смерть"               |
 
 ## 🔮 Конфигурация
 - Вы можете заменить слова в конфигурационном файле BepInEx/config/com.infernumvii.magearenarussianvoice.cfg
