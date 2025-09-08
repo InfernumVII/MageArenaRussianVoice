@@ -11,7 +11,10 @@ namespace MageArenaRussianVoice.Patches
     [HarmonyPatch(typeof(SetUpModelProvider), "Setup")]
     public static class SetUpModelProviderPatch
     {
-        private static readonly String nameOfModel = "vosk-model-small-ru-0.22";
+        private static readonly string nameOfModel = "vosk-model-small-ru-0.22";
+        private static readonly string modPath = System.IO.Path.GetDirectoryName(typeof(SetUpModelProviderPatch).Assembly.Location);
+        private static readonly string modelPath = System.IO.Path.Combine(modPath, $"LanguageModels/{nameOfModel}");
+
         [HarmonyPrefix]
         public static bool Prefix(SetUpModelProvider __instance)
         {
@@ -22,7 +25,7 @@ namespace MageArenaRussianVoice.Patches
                 new StreamingAssetsLanguageModel
                 {
                     language = SystemLanguage.Russian,
-                    path = $"LanguageModels/{nameOfModel}"
+                    path = modelPath
                 }
             };
             SpeechRecognizer speechRecognizer = __instance.GetComponent<SpeechRecognizer>();

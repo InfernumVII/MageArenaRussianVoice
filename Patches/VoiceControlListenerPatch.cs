@@ -55,7 +55,9 @@ namespace MageArenaRussianVoice.Patches
                     {"blast", VoiceCommandConfig.BlastCommand.Value.Split(' ')},
                     {"divine", VoiceCommandConfig.DivineCommand.Value.Split(' ')},
                     {"blink", VoiceCommandConfig.BlinkCommand.Value.Split(' ')},
-                    {"thunderbolt", VoiceCommandConfig.ThunderboltCommand.Value.Split(' ')}
+                    {"thunderbolt", VoiceCommandConfig.ThunderboltCommand.Value.Split(' ')},
+                    {"bubble", VoiceCommandConfig.BubbleCommand.Value.Split(' ')},
+                    {"doom", VoiceCommandConfig.DoomCommand.Value.Split(' ')}
                 };
             }
         }
@@ -84,6 +86,9 @@ namespace MageArenaRussianVoice.Patches
             yield return null;
 
             srRef(instance) = instance.GetComponent<SpeechRecognizer>();
+            var recognizer = srRef(instance);
+            recognizer.LanguageModelProvider = instance.GetComponent<StreamingAssetsLanguageModelProvider>();
+            recognizer.SpeechSource = instance.GetComponent<DissonanceSpeechSource>();
             instance.SpellPages = new List<ISpellCommand>();
             MonoBehaviour[] components = instance.gameObject.GetComponents<MonoBehaviour>();
             for (int i = 0; i < components.Length; i++)
@@ -98,7 +103,7 @@ namespace MageArenaRussianVoice.Patches
             // {
             //     spellCommand2.ResetVoiceDetect();
             // }
-            var recognizer = srRef(instance);
+            
             //Main spells add to vocabulary
             addSpellsToVocabulary(recognizer);
             recognizer.ResultReady.AddListener(res => instance.tryresult(res.text));
